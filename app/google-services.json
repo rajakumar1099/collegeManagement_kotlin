@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "20915937204",
+    "firebase_url": "https://sit-kotlin.firebaseio.com",
+    "project_id": "sit-kotlin",
+    "storage_bucket": "sit-kotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20915937204:android:5c2f8659157a89694e5ce1",
+        "android_client_info": {
+          "package_name": "com.androider.kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20915937204-dtgl2k6vpj9uml3mtj149aq7i01no0an.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGBElf0M8ArnXa2NreGSTfaVqtx0x4xgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20915937204-dtgl2k6vpj9uml3mtj149aq7i01no0an.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

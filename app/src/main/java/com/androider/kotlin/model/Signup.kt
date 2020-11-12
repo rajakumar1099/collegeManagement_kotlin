@@ -1,0 +1,21 @@
+package com.androider.kotlin.model
+
+data class Signup(var username: String,
+                  var password: String,
+                  var devicetoken: String,
+                  var uid: String,
+                  var userType: String,
+                  var fullname: String,
+                  var lastlogin: String,
+                  var batch: String,
+                  var phonenumber: String,
+                  var imageURL: String,
+                  var emailID: String,
+                  var primaryaddress: String,
+                  var experience: String,
+                  var currentyear: String,
+                  var dateofbirth: String,
+                  var fathername: String,
+                  var mothername: String,
+                  var fatheroccupation: String,
+                  var motheroccupation: String)

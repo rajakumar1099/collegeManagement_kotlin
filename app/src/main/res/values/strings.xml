@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">College Management</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="announcements">Announcements</string>
+    <string name="my_calendar">My Calendar</string>
+    <string name="today_s_timeline">TODAY\'S TIMELINE</string>
+    <string name="mon_10_02_2020">Mon, 10-02-2020</string>
+    <string name="assignments">Assignments</string>
+    <string name="exam">Exam</string>
+    <string name="add_users">Add Users</string>
+    <string name="track_bus">Track bus</string>
+    <string name="manage_people">Manage People</string>
+</resources>
