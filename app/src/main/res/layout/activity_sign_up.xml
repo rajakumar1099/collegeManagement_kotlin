@@ -78,7 +78,7 @@
                     android:background="@color/transparent"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_remove_red_eye_24"/>
+                    android:src="@drawable/ic_showpassword"/>
             </RelativeLayout>
 
         </LinearLayout>

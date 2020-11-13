@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:id="@+id/root"
@@ -62,11 +63,22 @@
                     <RelativeLayout
                         android:id="@+id/noticeLay"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp"
+                        android:layout_height="178dp"
                         android:padding="10dp"
                         android:background="@color/white">
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notice Board"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:id="@+id/noticeBoardText"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_alignParentTop="true"/>
                             <androidx.viewpager2.widget.ViewPager2
+                                android:layout_below="@+id/noticeBoardText"
                                 android:id="@+id/imageSliderViewPager"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

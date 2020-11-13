@@ -1,13 +1,17 @@
 package com.androider.kotlin.ui
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.androider.kotlin.R
@@ -16,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,10 +28,11 @@ import kotlin.collections.HashMap
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "MyActivity"
+    private var loginShow : Boolean = false
     private lateinit var pref : SharedPreferences
     private lateinit var firebaseDatabase: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: AlertDialog
     private lateinit var firebaseNewToken: String
     private lateinit var firebaseFirestore: FirebaseFirestore
     private lateinit var sdf: SimpleDateFormat
@@ -40,6 +46,12 @@ class LoginActivity : AppCompatActivity() {
         lastLoginTime()
         alertDialog()
         generateFirebaseToken()
+
+
+        //show,hide password function
+        showPasswordBtnLay.setOnClickListener(){
+            showHidePassword(passwordEv,showPasswordBtn)
+        }
 
     }
 
@@ -58,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
         }else{
             hideKeyboard()
             Log.d(TAG, "Email: " + emailEV.text.toString())
-            Log.d(TAG, "Password: " + passwordEv.text.toString())
+            Log.d(TAG, "Password: " + passwordEv.text.trim().toString())
             var email: String = emailEV.text.toString()
             var password: String = passwordEv.text.toString()
             firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -72,6 +84,20 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun showHidePassword(passwordEv: EditText, showPasswordBtn: ImageView){
+        if (!loginShow) {
+            loginShow = true
+            passwordEv.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            Log.d(TAG, "showHidePassword: Show ${passwordEv.text}")
+            showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_showpassword))
+        } else {
+            showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_hidepassword))
+            loginShow = false
+            passwordEv.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            Log.d(TAG, "showHidePassword: Hide ${passwordEv.text}")
+
+        }
+    }
 
     private fun hideKeyboard(){
         try {
@@ -82,9 +108,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun alertDialog(){
-        progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Alert")
-        progressDialog.setMessage("Please Wait")
+        progressDialog = SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Please Wait")
+                .setCancelable(false)
+                .build()
     }
 
     private fun generateFirebaseToken(){
@@ -115,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
             firebaseUpdateDate.update(Constants.LastLogin,currentTime,
                                       Constants.DeviceToken,firebaseNewToken)
             Log.d(TAG, "updateData: $map")
-            Toast.makeText(this,"Updated Successfully",Toast.LENGTH_SHORT).show()
+            Log.d(TAG,"Updated Successfully")
             setUserData(uid)
 
         }else{
@@ -190,6 +218,8 @@ class LoginActivity : AppCompatActivity() {
         finish()
 
     }
+
+
 
 }
 

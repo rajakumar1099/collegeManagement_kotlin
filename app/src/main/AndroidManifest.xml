@@ -25,11 +25,11 @@
         <activity
             android:name=".ui.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/CustomAppTheme" />
         <activity
             android:name=".ui.ForgetPassword"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/CustomAppTheme" />
         <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"

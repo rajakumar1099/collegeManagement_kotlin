@@ -3,6 +3,7 @@ package com.androider.kotlin.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputType
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,6 @@ import com.androider.kotlin.R
 import com.androider.kotlin.ui.imageSlide.ImageSliderAdapter
 import com.androider.kotlin.utils.Constants
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlin.math.abs
 
@@ -24,8 +24,8 @@ class HomeFragment : Fragment() {
     private var handler: Handler = Handler()
     lateinit var runnable: Runnable
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         statusBarColor()
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
@@ -63,17 +63,16 @@ class HomeFragment : Fragment() {
 
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer(10))
-        compositePageTransformer.addTransformer(ViewPager2.PageTransformer(){
-                page: View, position: Float ->
+        compositePageTransformer.addTransformer(ViewPager2.PageTransformer() { page: View, position: Float ->
             val float: Float = 1 - abs(position)
             page.scaleY = 0.85f + float * 0.15f
         })
         view.imageSliderViewPager.setPageTransformer(compositePageTransformer)
-        view.imageSliderViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+        view.imageSliderViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable,10000)
+                handler.postDelayed(runnable, 10000)
             }
         })
 
@@ -90,7 +89,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(runnable,10000)
+        handler.postDelayed(runnable, 10000)
     }
 
 
@@ -102,7 +101,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun openAddUserPage(){
-        startActivity(Intent(context,AddUserActivity::class.java))
+        startActivity(Intent(context, AddUserActivity::class.java))
     }
 
     private fun addImageURLList(){
