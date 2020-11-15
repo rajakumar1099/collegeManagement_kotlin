@@ -15,7 +15,7 @@ import com.androider.kotlin.utils.Constants
 
 class SplashActivity : AppCompatActivity() {
 
-    val splashTimeOut:Long = 3000
+    private val splashTimeOut:Long = 3000
     lateinit var pref : SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
