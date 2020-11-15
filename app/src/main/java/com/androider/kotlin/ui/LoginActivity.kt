@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "MyActivity"
@@ -55,31 +56,35 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun LoginBtn(view: View) {
+    fun loginBtn(view: View) {
         progressDialog.show()
-        if (emailEV.text.toString().isEmpty()){
-            emailEV.error = "Enter the Email"
-            progressDialog.dismiss()
-        }
-        else if(passwordEv.text.toString().isEmpty()){
-            passwordEv.error = "Enter the Password"
-            progressDialog.dismiss()
-        }else if(passwordEv.text.toString().length<6){
-            passwordEv.error = "Password should be more than 6 character"
-            progressDialog.dismiss()
-        }else{
-            hideKeyboard()
-            Log.d(TAG, "Email: " + emailEV.text.toString())
-            Log.d(TAG, "Password: " + passwordEv.text.trim().toString())
-            var email: String = emailEV.text.toString()
-            var password: String = passwordEv.text.toString()
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-//                Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
-                    updateDate()
-                }.addOnFailureListener { p0 ->
-                    progressDialog.dismiss()
-                    Toast.makeText(applicationContext, p0.toString(), Toast.LENGTH_SHORT).show()
+        when {
+            emailEV.text.toString().isEmpty() -> {
+                emailEV.error = "Enter the Email"
+                progressDialog.dismiss()
+            }
+            passwordEv.text.toString().isEmpty() -> {
+                passwordEv.error = "Enter the Password"
+                progressDialog.dismiss()
+            }
+            passwordEv.text.toString().length<6 -> {
+                passwordEv.error = "Password should be more than 6 character"
+                progressDialog.dismiss()
+            }
+            else -> {
+                hideKeyboard()
+                Log.d(TAG, "Email: " + emailEV.text.toString())
+                Log.d(TAG, "Password: " + passwordEv.text.trim().toString())
+                var email: String = emailEV.text.toString()
+                var password: String = passwordEv.text.toString()
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+    //                Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
+                        updateDate()
+                    }.addOnFailureListener { p0 ->
+                        progressDialog.dismiss()
+                        Toast.makeText(applicationContext, p0.toString(), Toast.LENGTH_SHORT).show()
+                    }
             }
         }
     }
@@ -158,59 +163,122 @@ class LoginActivity : AppCompatActivity() {
         val firebaseFirestore = firebaseFirestore.collection("users").document(uid)
         firebaseFirestore.get().addOnSuccessListener { task ->
             if(task.exists()){
-            Constants.TempUsername = task.get(Constants.Username).toString()
-            Constants.TempPassword = task.get(Constants.Password).toString()
-            Constants.TempGender = task.get(Constants.Gender).toString()
-            Constants.TempUserType = task.get(Constants.UserType).toString()
-            Constants.TempDeviceToken = task.get(Constants.DeviceToken).toString()
-            Constants.TempUid = task.get(Constants.Uid).toString()
-            Constants.TempFullName = task.get(Constants.FullName).toString()
-            Constants.TempLastLogin = task.get(Constants.LastLogin).toString()
-            Constants.TempBatch = task.get(Constants.Batch).toString()
-            Constants.TempPhoneNumber = task.get(Constants.PhoneNumber).toString()
-            Constants.TempImageURL = task.get(Constants.ImageURL).toString()
-            Constants.TempEmailID = task.get(Constants.EmailID).toString()
-            Constants.TempPrimaryAddress = task.get(Constants.PrimaryAddress).toString()
-            Constants.TempExperience = task.get(Constants.Experience).toString()
-            Constants.TempDateOfBirth = task.get(Constants.DateOfBirth).toString()
-            Constants.TempFatherName = task.get(Constants.FatherName).toString()
-            Constants.TempMotherName = task.get(Constants.FatherName).toString()
-            Constants.TempFatherOccupation = task.get(Constants.FatherOccupation).toString()
-            Constants.TempMotherOccupation = task.get(Constants.MotherOccupation).toString()
+                if (task.get(Constants.UserType).toString() == "admin"){
+                    Log.d(TAG, "setUserData: ${task.get(Constants.UserType).toString()}")
+                    Constants.TempUsername = task.get(Constants.Username).toString()
+                    Constants.TempPassword = task.get(Constants.Password).toString()
+                    Constants.TempGender = task.get(Constants.Gender).toString()
+                    Constants.TempUserType = task.get(Constants.UserType).toString()
+                    Constants.TempDeviceToken = task.get(Constants.DeviceToken).toString()
+                    Constants.TempUid = task.get(Constants.Uid).toString()
+                    Constants.TempFullName = task.get(Constants.FullName).toString()
+                    Constants.TempLastLogin = task.get(Constants.LastLogin).toString()
+                    Constants.TempBatch = task.get(Constants.Batch).toString()
+                    Constants.TempPhoneNumber = task.get(Constants.PhoneNumber).toString()
+                    Constants.TempImageURL = task.get(Constants.ImageURL).toString()
+                    Constants.TempEmailID = task.get(Constants.EmailID).toString()
+                    Constants.TempPrimaryAddress = task.get(Constants.PrimaryAddress).toString()
+                    Constants.TempExperience = task.get(Constants.Experience).toString()
+                    Constants.TempDateOfBirth = task.get(Constants.DateOfBirth).toString()
+                    Constants.TempFatherName = task.get(Constants.FatherName).toString()
+                    Constants.TempMotherName = task.get(Constants.FatherName).toString()
+                    Constants.TempFatherOccupation = task.get(Constants.FatherOccupation).toString()
+                    Constants.TempMotherOccupation = task.get(Constants.MotherOccupation).toString()
+                    sharedPref()
+
+                }else if(task.get(Constants.UserType).toString() == "student"){
+                    Log.d(TAG, "setUserData: ${task.get(Constants.UserType).toString()}")
+                    Constants.TempUsername = task.get(Constants.Username).toString()
+                    Constants.TempPassword = task.get(Constants.Password).toString()
+                    Constants.TempGender = task.get(Constants.Gender).toString()
+                    Constants.TempUserType = task.get(Constants.UserType).toString()
+                    Constants.TempDepartment = task.get(Constants.Department).toString()
+                    Constants.TempRollNumber = task.get(Constants.RollNumber).toString()
+                    Constants.TempRegisterNumber = task.get(Constants.RegisterNumber).toString()
+                    Constants.TempDeviceToken = task.get(Constants.DeviceToken).toString()
+                    Constants.TempUid = task.get(Constants.Uid).toString()
+                    Constants.TempFullName = task.get(Constants.FullName).toString()
+                    Constants.TempLastLogin = task.get(Constants.LastLogin).toString()
+                    Constants.TempBatch = task.get(Constants.Batch).toString()
+                    Constants.TempPhoneNumber = task.get(Constants.PhoneNumber).toString()
+                    Constants.TempImageURL = task.get(Constants.ImageURL).toString()
+                    Constants.TempEmailID = task.get(Constants.EmailID).toString()
+                    Constants.TempPrimaryAddress = task.get(Constants.PrimaryAddress).toString()
+                    Constants.TempExperience = task.get(Constants.Experience).toString()
+                    Constants.TempDateOfBirth = task.get(Constants.DateOfBirth).toString()
+                    Constants.TempFatherName = task.get(Constants.FatherName).toString()
+                    Constants.TempMotherName = task.get(Constants.FatherName).toString()
+                    Constants.TempFatherOccupation = task.get(Constants.FatherOccupation).toString()
+                    Constants.TempMotherOccupation = task.get(Constants.MotherOccupation).toString()
+                    sharedPref()
+                }
 
 
-                sharedPref()
+
             }
         }
         progressDialog.dismiss()
     }
 
-    fun ForgetPasswordBtn(view: View) {
+    fun forgetPasswordBtn(view: View) {
         startActivity(Intent(this, ForgetPassword::class.java))
     }
 
     private fun sharedPref(){
         pref = getSharedPreferences("SHARED_PREF",Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = pref.edit()
-        editor.putString("username", Constants.TempUsername)
-        editor.putString("password", Constants.TempPassword)
-        editor.putString("gender", Constants.TempGender)
-        editor.putString("userType", Constants.TempUserType)
-        editor.putString("deviceToken", Constants.TempDeviceToken)
-        editor.putString("uid", Constants.TempUid)
-        editor.putString("fullName", Constants.TempFullName)
-        editor.putString("lastLogin", Constants.TempLastLogin)
-        editor.putString("Batch", Constants.TempBatch)
-        editor.putString("phoneNumber", Constants.TempPhoneNumber)
-        editor.putString("imageURL", Constants.TempImageURL)
-        editor.putString("emailID", Constants.TempEmailID)
-        editor.putString("primaryAddress", Constants.TempPrimaryAddress)
-        editor.putString("dateOfBirth", Constants.TempDateOfBirth)
-        editor.putString("fatherName", Constants.TempFatherName)
-        editor.putString("motherName", Constants.TempMotherName)
-        editor.putString("fatherOccupation", Constants.TempFatherOccupation)
-        editor.putString("motherOccupation", Constants.TempMotherOccupation)
-        editor.apply()
+        when (Constants.TempUserType) {
+            "admin" -> {
+                Log.d(TAG, "sharedPref: $Constants.TempUserType")
+                editor.putString(Constants.Username, Constants.TempUsername)
+                editor.putString(Constants.Password, Constants.TempPassword)
+                editor.putString(Constants.Gender, Constants.TempGender)
+                editor.putString(Constants.UserType, Constants.TempUserType)
+                editor.putString(Constants.DeviceToken, Constants.TempDeviceToken)
+                editor.putString(Constants.Uid, Constants.TempUid)
+                editor.putString(Constants.FullName, Constants.TempFullName)
+                editor.putString(Constants.LastLogin, Constants.TempLastLogin)
+                editor.putString(Constants.Batch, Constants.TempBatch)
+                editor.putString(Constants.PhoneNumber, Constants.TempPhoneNumber)
+                editor.putString(Constants.ImageURL, Constants.TempImageURL)
+                editor.putString(Constants.EmailID, Constants.TempEmailID)
+                editor.putString(Constants.PrimaryAddress, Constants.TempPrimaryAddress)
+                editor.putString(Constants.DateOfBirth, Constants.TempDateOfBirth)
+                editor.putString(Constants.FatherName, Constants.TempFatherName)
+                editor.putString(Constants.MotherName, Constants.TempMotherName)
+                editor.putString(Constants.FatherOccupation, Constants.TempFatherOccupation)
+                editor.putString(Constants.MotherName, Constants.TempMotherOccupation)
+                editor.apply()
+            }
+            "student" -> {
+                Log.d(TAG, "sharedPref: $Constants.TempUserType")
+                editor.putString(Constants.Username, Constants.TempUsername)
+                editor.putString(Constants.Password, Constants.TempPassword)
+                editor.putString(Constants.Gender, Constants.TempGender)
+                editor.putString(Constants.UserType, Constants.TempUserType)
+                editor.putString(Constants.DeviceToken, Constants.TempDeviceToken)
+                editor.putString(Constants.Uid, Constants.TempUid)
+                editor.putString(Constants.Department,Constants.TempDepartment)
+                editor.putString(Constants.RegisterNumber,Constants.TempRegisterNumber)
+                editor.putString(Constants.RollNumber,Constants.TempRollNumber)
+                editor.putString(Constants.FullName, Constants.TempFullName)
+                editor.putString(Constants.LastLogin, Constants.TempLastLogin)
+                editor.putString(Constants.Batch, Constants.TempBatch)
+                editor.putString(Constants.PhoneNumber, Constants.TempPhoneNumber)
+                editor.putString(Constants.ImageURL, Constants.TempImageURL)
+                editor.putString(Constants.EmailID, Constants.TempEmailID)
+                editor.putString(Constants.PrimaryAddress, Constants.TempPrimaryAddress)
+                editor.putString(Constants.DateOfBirth, Constants.TempDateOfBirth)
+                editor.putString(Constants.FatherName, Constants.TempFatherName)
+                editor.putString(Constants.MotherName, Constants.TempMotherName)
+                editor.putString(Constants.FatherOccupation, Constants.TempFatherOccupation)
+                editor.putString(Constants.MotherOccupation, Constants.TempMotherOccupation)
+                editor.apply()
+            }
+            else -> {
+                Log.d(TAG, "sharedPref: $Constants.TempUserType")
+            }
+        }
 
         Log.d(TAG, "sharedPref: Saved Successfully $editor")
 

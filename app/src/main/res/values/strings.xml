@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">College Management</string>
     <!-- TODO: Remove or change this placeholder text -->
+    
+    
+    <array name="departments">
+        <item>Select The Department</item>
+        <item>Electronics and communication Engineering</item>
+        <item>Electrical and Electronics Engineering</item>
+        <item>Bio Medical Engineering</item>
+        <item>Computer Science Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Civil Engineering</item>
+
+    </array>
+    
+    
+    
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="announcements">Announcements</string>
     <string name="my_calendar">My Calendar</string>
@@ -11,4 +26,5 @@
     <string name="add_users">Add Users</string>
     <string name="track_bus">Track bus</string>
     <string name="manage_people">Manage People</string>
+    <string name="title_activity_track_bus_map">Map</string>
 </resources>

@@ -18,6 +18,10 @@
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
     </style>
 
+    <style name="SpinnerItemStyle" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
 
 
 </resources>

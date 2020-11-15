@@ -10,6 +10,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -17,11 +18,10 @@
                 android:layout_alignParentTop="true"
                 layout="@layout/toolbar"
                 android:id="@+id/toolbar"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
             <LinearLayout
                 android:id="@+id/rootLay"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -30,21 +30,36 @@
                 <EditText
                     android:id="@+id/sUsername"
                     android:paddingStart="10dp"
+                    android:layout_marginBottom="5dp"
                     android:hint="Username"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/full_circle"
                     android:backgroundTint="@color/gWhite"/>
-                <EditText
-                    android:id="@+id/sPassword"
-                    android:paddingStart="10dp"
-                    android:hint="Password"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/full_circle"
-                    android:backgroundTint="@color/gWhite"/>
+                    android:background="@drawable/full_circle">
+                    <EditText
+                        android:inputType="textPassword"
+                        android:id="@+id/sPassword"
+                        android:paddingStart="10dp"
+                        android:hint="Password"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@drawable/full_circle"
+                        android:backgroundTint="@color/gWhite"/>
+
+                    <ImageView
+                        android:id="@+id/showPasswordBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_showpassword"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10dp"/>
+                </RelativeLayout>
                 <LinearLayout
                     android:padding="10dp"
                     android:layout_width="wrap_content"
@@ -58,20 +73,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gender:"/>
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
                         android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="Male"/>
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="Female"/>
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:id="@+id/radioBtnMale"
+                            android:text="Male"/>
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/radioBtnFemale"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Female"/>
+                    </RadioGroup>
+
                 </LinearLayout>
                 <EditText
+                    android:inputType="number"
                     android:id="@+id/sBatch"
                     android:paddingStart="10dp"
                     android:hint="Batch"
@@ -81,6 +106,44 @@
                     android:background="@drawable/full_circle"
                     android:backgroundTint="@color/gWhite"/>
                 <EditText
+                    android:inputType="number"
+                    android:id="@+id/sRegisterNumber"
+                    android:paddingStart="10dp"
+                    android:hint="Register Number"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/sRollNumber"
+                    android:paddingStart="10dp"
+                    android:hint="Roll Number"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:id="@+id/sDepartment"
+                        android:entries="@array/departments"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        style="@style/SpinnerItemStyle"
+                        android:pointerIcon="arrow"
+                        tools:targetApi="n" />
+                </LinearLayout>
+
+
+                <EditText
+                    android:inputType="number"
                     android:id="@+id/sMobileNumber"
                     android:paddingStart="10dp"
                     android:hint="Mobile Number"
@@ -93,6 +156,7 @@
                     android:id="@+id/sEmailID"
                     android:paddingStart="10dp"
                     android:hint="Email ID"
+                    android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginBottom="5dp"

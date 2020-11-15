@@ -1,24 +1,19 @@
 package com.androider.kotlin.ui
 
+import android.R.attr
 import android.app.AlertDialog
-import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.RelativeLayout
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.androider.kotlin.R
-import com.androider.kotlin.utils.Constants
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeActivity : AppCompatActivity() {
 
     lateinit var alertDialog: AlertDialog.Builder
+    var startingPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,52 +25,57 @@ class HomeActivity : AppCompatActivity() {
         val chatFragment = ChatFragment()
         val profileFragment = ProfileFragment()
 
-        makeCurrentFragment(homeFragment)
+        makeCurrentFragment(homeFragment, 1)
         bottomNavigationBar.setItemSelected(R.id.home)
         bottomNavigationBar.setOnItemSelectedListener {
 
             when(it){
-                R.id.home -> makeCurrentFragment(homeFragment)
-                R.id.events -> makeCurrentFragment(eventFragment)
-                R.id.chat -> makeCurrentFragment(chatFragment)
-                R.id.profile -> makeCurrentFragment(profileFragment)
+                R.id.home -> makeCurrentFragment(homeFragment, 1)
+                R.id.events -> makeCurrentFragment(eventFragment, 2)
+                R.id.chat -> makeCurrentFragment(chatFragment, 3)
+                R.id.profile -> makeCurrentFragment(profileFragment, 4)
             }
         }
 
 
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().apply {
-        replace(R.id.frameLay,fragment).commit()
+    private fun makeCurrentFragment(fragment: Fragment, newPosition: Int)
+//            = supportFragmentManager.beginTransaction().apply {
+//        setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right).replace(R.id.frameLay, fragment, "h")
+//                .addToBackStack("h").commit()
+    {
+        if (startingPosition > newPosition) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right)
+            transaction.replace(R.id.frameLay, fragment)
+            transaction.commit()
+        }
+        if (startingPosition < newPosition) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+            transaction.replace(R.id.frameLay, fragment)
+            transaction.commit()
+        }
+        startingPosition = newPosition
+
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        alertDialog()
-    }
-
-    private fun alertDialog(){
         alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Alert")
         alertDialog.setCancelable(true)
-        alertDialog.setMessage("Are you sure?")
+        alertDialog.setMessage("Are you sure you want to close?")
 
-        alertDialog.setPositiveButton("Yes"){dialogInterface, which ->
+        val positiveButtonClick = { dialog: DialogInterface, which: Int ->
             finish()
         }
-        alertDialog.setPositiveButton("No"){dialogInterface, which ->
-            Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
         }
+        alertDialog.setPositiveButton("Yes", DialogInterface.OnClickListener(function = positiveButtonClick))
+        alertDialog.setNegativeButton("No", DialogInterface.OnClickListener(function = negativeButtonClick))
         alertDialog.create()
         alertDialog.show()
-
-//        val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-//            finish()
-//        }
-//        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
-//        }
-//        alertDialog.setPositiveButton("Yes", DialogInterface.OnClickListener(function = positiveButtonClick))
-//        alertDialog.setNegativeButton("No", DialogInterface.OnClickListener(function = negativeButtonClick))
-
     }
+
 }

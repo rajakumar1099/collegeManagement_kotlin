@@ -32,29 +32,56 @@ class SplashActivity : AppCompatActivity() {
 
     private fun loadData(){
         pref = getSharedPreferences("SHARED_PREF",Context.MODE_PRIVATE)
-        if (pref.contains(Constants.Username)){
-            Log.d("TAG", "loadData: DataFound")
-            Constants.TempUsername = pref.getString("username",Constants.TempUsername).toString()
-            Constants.TempPassword = pref.getString("password", Constants.TempPassword).toString()
-            Constants.TempUserType = pref.getString("userType", Constants.TempUserType).toString()
-            Constants.TempDeviceToken = pref.getString("deviceToken", Constants.TempDeviceToken).toString()
-            Constants.TempUid = pref.getString("uid", Constants.TempUid).toString()
-            Constants.TempFullName = pref.getString("fullName", Constants.TempFullName).toString()
-            Constants.TempLastLogin = pref.getString("lastLogin", Constants.TempLastLogin).toString()
-            Constants.TempBatch = pref.getString("Batch", Constants.TempBatch).toString()
-            Constants.TempPhoneNumber = pref.getString("phoneNumber", Constants.TempPhoneNumber).toString()
-            Constants.TempImageURL = pref.getString("imageURL", Constants.TempImageURL).toString()
-            Constants.TempEmailID = pref.getString("emailID", Constants.TempEmailID).toString()
-            Constants.TempPrimaryAddress = pref.getString("primaryAddress", Constants.TempPrimaryAddress).toString()
-            Constants.TempDateOfBirth = pref.getString("dateOfBirth", Constants.TempDateOfBirth).toString()
-            Constants.TempFatherName = pref.getString("fatherName", Constants.TempFatherName).toString()
-            Constants.TempMotherName = pref.getString("motherName", Constants.TempMotherName).toString()
-            Constants.TempFatherOccupation = pref.getString("fatherOccupation", Constants.TempFatherOccupation).toString()
-            Constants.TempMotherOccupation = pref.getString("motherOccupation", Constants.TempMotherOccupation).toString()
-            MoveToHomePage()
-        }else{
-            Log.d("TAG", "loadData: NoDataFound")
-            moveToLoginPage()
+        when {
+            pref.getString("usertype", Constants.TempUserType).toString() == "admin" -> {
+                Log.d("TAG", "loadData: Admin")
+                Constants.TempUsername = pref.getString(Constants.Username,Constants.TempUsername).toString()
+                Constants.TempPassword = pref.getString(Constants.Password, Constants.TempPassword).toString()
+                Constants.TempUserType = pref.getString(Constants.UserType, Constants.TempUserType).toString()
+                Constants.TempDeviceToken = pref.getString(Constants.DeviceToken, Constants.TempDeviceToken).toString()
+                Constants.TempUid = pref.getString(Constants.Uid, Constants.TempUid).toString()
+                Constants.TempFullName = pref.getString(Constants.FullName, Constants.TempFullName).toString()
+                Constants.TempLastLogin = pref.getString(Constants.LastLogin, Constants.TempLastLogin).toString()
+                Constants.TempBatch = pref.getString(Constants.Batch, Constants.TempBatch).toString()
+                Constants.TempPhoneNumber = pref.getString(Constants.PhoneNumber, Constants.TempPhoneNumber).toString()
+                Constants.TempImageURL = pref.getString(Constants.ImageURL, Constants.TempImageURL).toString()
+                Constants.TempEmailID = pref.getString(Constants.EmailID, Constants.TempEmailID).toString()
+                Constants.TempPrimaryAddress = pref.getString(Constants.PrimaryAddress, Constants.TempPrimaryAddress).toString()
+                Constants.TempDateOfBirth = pref.getString(Constants.DateOfBirth, Constants.TempDateOfBirth).toString()
+                Constants.TempFatherName = pref.getString(Constants.FatherName, Constants.TempFatherName).toString()
+                Constants.TempMotherName = pref.getString(Constants.MotherName, Constants.TempMotherName).toString()
+                Constants.TempFatherOccupation = pref.getString(Constants.FatherOccupation, Constants.TempFatherOccupation).toString()
+                Constants.TempMotherOccupation = pref.getString(Constants.MotherOccupation, Constants.TempMotherOccupation).toString()
+                moveToHomePage()
+            }
+            pref.getString("usertype", Constants.TempUserType).toString() == "student" -> {
+                Log.d("TAG", "loadData: Student")
+                Constants.TempUsername = pref.getString(Constants.Username,Constants.TempUsername).toString()
+                Constants.TempPassword = pref.getString(Constants.Password, Constants.TempPassword).toString()
+                Constants.TempUserType = pref.getString(Constants.UserType, Constants.TempUserType).toString()
+                Constants.TempDeviceToken = pref.getString(Constants.DeviceToken, Constants.TempDeviceToken).toString()
+                Constants.TempRegisterNumber = pref.getString(Constants.RegisterNumber,Constants.TempRegisterNumber).toString()
+                Constants.TempRollNumber = pref.getString(Constants.RollNumber,Constants.TempRollNumber).toString()
+                Constants.TempDepartment = pref.getString(Constants.Department,Constants.TempDepartment).toString()
+                Constants.TempUid = pref.getString(Constants.Uid, Constants.TempUid).toString()
+                Constants.TempFullName = pref.getString(Constants.FullName, Constants.TempFullName).toString()
+                Constants.TempLastLogin = pref.getString(Constants.LastLogin, Constants.TempLastLogin).toString()
+                Constants.TempBatch = pref.getString(Constants.Batch, Constants.TempBatch).toString()
+                Constants.TempPhoneNumber = pref.getString(Constants.PhoneNumber, Constants.TempPhoneNumber).toString()
+                Constants.TempImageURL = pref.getString(Constants.ImageURL, Constants.TempImageURL).toString()
+                Constants.TempEmailID = pref.getString(Constants.EmailID, Constants.TempEmailID).toString()
+                Constants.TempPrimaryAddress = pref.getString(Constants.PrimaryAddress, Constants.TempPrimaryAddress).toString()
+                Constants.TempDateOfBirth = pref.getString(Constants.DateOfBirth, Constants.TempDateOfBirth).toString()
+                Constants.TempFatherName = pref.getString(Constants.FatherName, Constants.TempFatherName).toString()
+                Constants.TempMotherName = pref.getString(Constants.MotherName, Constants.TempMotherName).toString()
+                Constants.TempFatherOccupation = pref.getString(Constants.FatherOccupation, Constants.TempFatherOccupation).toString()
+                Constants.TempMotherOccupation = pref.getString(Constants.MotherOccupation, Constants.TempMotherOccupation).toString()
+                moveToHomePage()
+            }
+            else -> {
+                Log.d("TAG", "loadData: NoDataFound")
+                moveToLoginPage()
+            }
         }
     }
 
@@ -65,7 +92,7 @@ class SplashActivity : AppCompatActivity() {
         },splashTimeOut)
     }
 
-    private fun MoveToHomePage(){
+    private fun moveToHomePage(){
 
         Handler().postDelayed({
             startActivity(Intent(this,HomeActivity::class.java))

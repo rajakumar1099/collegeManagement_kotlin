@@ -30,10 +30,22 @@ class HomeFragment : Fragment() {
         statusBarColor()
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
         // Inflate the layout for this fragment
-        if (Constants.TempUserType == "student") {
-            view.timeTableLay.visibility = View.VISIBLE
-        }else {
-            view.timeTableLay.visibility = View.GONE
+        when (Constants.TempUserType) {
+            "student" -> {
+                view.studentLay.visibility = View.VISIBLE
+            }
+            "admin" -> {
+                view.adminLay.visibility = View.VISIBLE
+            }
+            "teacher" -> {
+
+            }
+            "busdriver" ->{
+
+            }
+            else -> {
+
+            }
         }
 
         //Notice board banner
@@ -43,7 +55,7 @@ class HomeFragment : Fragment() {
 
         //Set User Profile Picture
         view.usernameTv.text = Constants.TempUsername
-        Glide.with(view.context).load(Constants.TempImageURL).into(view.profileImg)
+        Glide.with(view.context).load(Constants.TempImageURL).error(R.drawable.default_profile).centerCrop().into(view.profileImg)
 
 
 
@@ -51,6 +63,9 @@ class HomeFragment : Fragment() {
             openAddUserPage()
         }
 
+        view.adminTrackBusLay.setOnClickListener(){
+            startActivity(Intent(context,TrackBusMapActivity::class.java))
+        }
         return view
     }
 
