@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.InputType
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -38,13 +39,13 @@ class HomeFragment : Fragment() {
                 view.adminLay.visibility = View.VISIBLE
             }
             "teacher" -> {
-
+                view.teacherLay.visibility = View.VISIBLE
             }
             "busdriver" ->{
 
             }
             else -> {
-
+                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
             }
         }
 

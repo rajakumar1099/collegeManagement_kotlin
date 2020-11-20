@@ -279,7 +279,8 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:paddingRight="10dp"
-                        android:paddingLeft="10dp"                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:gravity="center"
                         android:weightSum="2"
                         android:orientation="horizontal">
                         <androidx.cardview.widget.CardView
@@ -347,7 +348,6 @@
                     </LinearLayout>
                 </LinearLayout>
 <!--                StudentLay-->
-
                 <LinearLayout
                     android:visibility="gone"
                     android:id="@+id/studentLay"
@@ -357,31 +357,31 @@
                     android:orientation="vertical">
                     <RelativeLayout
                         android:layout_below="@+id/noticeLay"
-                        android:id="@+id/timeTableLay"
+                        android:id="@+id/studenttimeTableLay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:background="@color/white">
                         <TextView
-                            android:id="@+id/timeTableTv"
+                            android:id="@+id/studenttimeTableTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/today_s_timeline"
                             android:textSize="12sp"
                             android:textStyle="normal"/>
                         <TextView
-                            android:layout_below="@+id/timeTableTv"
+                            android:layout_below="@+id/studenttimeTableTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/mon_10_02_2020"
                             android:textSize="16sp"
-                            android:id="@+id/datetv"
+                            android:id="@+id/studentdatetv"
                             android:textStyle="bold"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:id="@+id/timeTableRecycler"
-                            android:layout_below="@+id/datetv"/>
+                            android:id="@+id/studenttimeTableRecycler"
+                            android:layout_below="@+id/studentdatetv"/>
 
                     </RelativeLayout>
 
@@ -395,14 +395,15 @@
                         android:layout_marginTop="10dp">
                         <androidx.cardview.widget.CardView
                             android:layout_weight="1"
-                            android:id="@+id/studentAnnouncementLay"
+                            android:id="@+id/studentstudentAttendanceLay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="12dp"
                             android:elevation="0dp"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:clickable="true"
-                            app:cardUseCompatPadding="true">
+                            app:cardUseCompatPadding="true"
+                            android:focusable="true">
                             <LinearLayout
                                 android:padding="10dp"
                                 android:layout_width="match_parent"
@@ -413,12 +414,12 @@
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
-                                    android:src="@drawable/ic_announcement"
+                                    android:src="@drawable/ic_attendance"
                                     android:layout_marginBottom="10dp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/announcements"
+                                    android:text="Attendance"
                                     android:textSize="12sp"
                                     android:textAlignment="center"
                                     android:textStyle="bold"/>
@@ -568,7 +569,8 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:paddingRight="10dp"
-                        android:paddingLeft="10dp"                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:gravity="center"
                         android:weightSum="2"
                         android:orientation="horizontal">
                         <androidx.cardview.widget.CardView
@@ -635,6 +637,296 @@
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>
+<!--                TeacherLay-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/teacherLay"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/topLay"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_below="@+id/teachernoticeLay"
+                        android:id="@+id/timeTableLay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white">
+                        <TextView
+                            android:id="@+id/teachertimeTableTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_s_timeline"
+                            android:textSize="12sp"
+                            android:textStyle="normal"/>
+                        <TextView
+                            android:layout_below="@+id/teachertimeTableTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mon_10_02_2020"
+                            android:textSize="16sp"
+                            android:id="@+id/datetv"
+                            android:textStyle="bold"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:id="@+id/timeTableRecycler"
+                            android:layout_below="@+id/datetv"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherAnnouncementLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="130dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_announcement"
+                                    android:layout_marginBottom="10dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/announcements"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherManageLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="130dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_manage"
+                                    android:layout_marginBottom="10dp"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Manage Staffs"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherMyCalendarLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="130dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_calendar"
+                                    android:layout_marginBottom="10dp"/>
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/my_calendar"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherAssignmentLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_assignment"
+                                    android:layout_marginBottom="20dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/assignments"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherExamLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_exam"
+                                    android:layout_marginBottom="20dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherAddUserLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_add_people"
+                                    android:layout_marginBottom="20dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Leave Apply"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_weight="1"
+                            android:id="@+id/teacherTrackBusLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="12dp"
+                            android:elevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            app:cardUseCompatPadding="true">
+                            <LinearLayout
+
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_bus"
+                                    android:layout_marginBottom="20dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/track_bus"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </RelativeLayout>
         </LinearLayout>

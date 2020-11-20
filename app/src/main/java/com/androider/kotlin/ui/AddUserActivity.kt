@@ -18,6 +18,10 @@ class AddUserActivity : AppCompatActivity() {
         addStudentLay.setOnClickListener(){
             startActivity(Intent(this,AddStudentActivity::class.java))
         }
+
+        addTeacherLay.setOnClickListener(){
+            startActivity(Intent(this,AddTeacherActivity::class.java))
+        }
     }
 
     private fun toolbar(){

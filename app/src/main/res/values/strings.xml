@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">College Management</string>
     <!-- TODO: Remove or change this placeholder text -->
-    
-    
+
+
     <array name="departments">
         <item>Select The Department</item>
         <item>Electronics and communication Engineering</item>
@@ -13,9 +13,8 @@
         <item>Civil Engineering</item>
 
     </array>
-    
-    
-    
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="announcements">Announcements</string>
     <string name="my_calendar">My Calendar</string>
