@@ -1,14 +1,17 @@
 package com.androider.kotlin.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
 import com.google.android.gms.common.ConnectionResult
@@ -23,10 +26,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+import kotlinx.android.synthetic.main.activity_track_bus_map.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.*
 
-class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mLastLocation: Location
@@ -36,6 +42,8 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationLis
     private var mGoogleApiClient: GoogleApiClient? = null
     private lateinit var mLocationRequest: LocationRequest
     private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var ACCESS_LOCATION_REQUEST_CODE: Int = 10001
+    lateinit var locationTask: Task<Location>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,53 +53,61 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationLis
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         setToolbar()
+        floatingCurrentLocationBtn.setOnClickListener {
+            zoomToUserLocation()
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient()
-                mMap.isMyLocationEnabled = true
+
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+            enableUserLocation()
+            zoomToUserLocation()
+        }else{
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),ACCESS_LOCATION_REQUEST_CODE)
+            }else{
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),ACCESS_LOCATION_REQUEST_CODE)
             }
-        } else {
-            buildGoogleApiClient()
-            mMap.isMyLocationEnabled = true
-        }
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
-
-    @Synchronized
-    protected fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .addApi(LocationServices.API).build()
-        mGoogleApiClient!!.connect()
-    }
-
-    override fun onConnected(bundle: Bundle?) {
-
-        mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 1000
-        mLocationRequest.fastestInterval = 1000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            mFusedLocationClient?.requestLocationUpdates(mLocationRequest,mLocationCallback, Looper.myLooper())
         }
     }
 
-    override fun onConnectionSuspended(p0: Int) {
-        Toast.makeText(applicationContext,"connection suspended", Toast.LENGTH_SHORT).show()
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == ACCESS_LOCATION_REQUEST_CODE){
+            if ( grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                enableUserLocation()
+                zoomToUserLocation()
+            }else{
+                Toast.makeText(this,"Turn On Location",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
+    @SuppressLint("MissingPermission")
+    private fun enableUserLocation(){
+        mMap.isMyLocationEnabled = true
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun zoomToUserLocation(){
+        locationTask = mFusedLocationClient!!.lastLocation
+        locationTask.addOnSuccessListener (OnSuccessListener {
+            if(locationTask.isSuccessful){
+                var latLng = LatLng(it.latitude,it.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16F))
+            }else{
+                Toast.makeText(this,"Something Went Wrong",Toast.LENGTH_SHORT).show()            }
+        })
+
+    }
+
+
+
 
     private fun setToolbar(){
         toolbarBackBtn.setOnClickListener(){
@@ -106,29 +122,5 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback, LocationLis
         finish()
     }
 
-    override fun onLocationChanged(location: Location) {
-        mLastLocation = location
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker!!.remove()
-        }
-        //Place current location marker
-        val latLng = LatLng(location.latitude, location.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Current Position")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-        mCurrLocationMarker = mMap!!.addMarker(markerOptions)
 
-        //move map camera
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
-        }      }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        Toast.makeText(applicationContext,"connection failed", Toast.LENGTH_SHORT).show()
-    }
 }

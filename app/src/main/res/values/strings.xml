@@ -5,13 +5,31 @@
 
     <array name="departments">
         <item>Select The Department</item>
-        <item>Electronics and communication Engineering</item>
-        <item>Electrical and Electronics Engineering</item>
-        <item>Bio Medical Engineering</item>
-        <item>Computer Science Engineering</item>
-        <item>Mechanical Engineering</item>
-        <item>Civil Engineering</item>
-
+        <item>Electronics and communication Engineering (ECE)</item>
+        <item>Electrical and Electronics Engineering (EEE)</item>
+        <item>Bio Medical Engineering (BME)</item>
+        <item>Computer Science Engineering (CSE)</item>
+        <item>Mechanical Engineering (MEC)</item>
+        <item>Civil Engineering (CV)</item>
+    </array>
+    <array name="classes">
+        <item>Select The Class</item>
+        <item>1st Year A</item>
+        <item>1st Year B</item>
+        <item>1st Year C</item>
+        <item>1st Year D</item>
+        <item>2nd Year A</item>
+        <item>2nd Year B</item>
+        <item>2nd Year C</item>
+        <item>2nd Year D</item>
+        <item>3rd Year A</item>
+        <item>3rd Year B</item>
+        <item>3rd Year C</item>
+        <item>3rd Year D</item>
+        <item>4th Year A</item>
+        <item>4th Year B</item>
+        <item>4th Year C</item>
+        <item>4th Year D</item>
     </array>
 
 

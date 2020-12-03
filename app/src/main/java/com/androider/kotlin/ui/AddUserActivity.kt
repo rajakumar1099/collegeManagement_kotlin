@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
 import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -14,6 +15,7 @@ class AddUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
         toolbar()
+
 
         addStudentLay.setOnClickListener(){
             startActivity(Intent(this,AddStudentActivity::class.java))

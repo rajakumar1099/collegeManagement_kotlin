@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                 var password: String = passwordEv.text.toString()
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener {
-    //                Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
                         updateDate()
                     }.addOnFailureListener { p0 ->
                         progressDialog.dismiss()
@@ -193,6 +193,7 @@ class LoginActivity : AppCompatActivity() {
                     Constants.TempGender = task.get(Constants.Gender).toString()
                     Constants.TempUserType = task.get(Constants.UserType).toString()
                     Constants.TempDepartment = task.get(Constants.Department).toString()
+                    Constants.TempClass = task.get(Constants.Class).toString()
                     Constants.TempRollNumber = task.get(Constants.RollNumber).toString()
                     Constants.TempRegisterNumber = task.get(Constants.RegisterNumber).toString()
                     Constants.TempDeviceToken = task.get(Constants.DeviceToken).toString()
@@ -211,10 +212,25 @@ class LoginActivity : AppCompatActivity() {
                     Constants.TempFatherOccupation = task.get(Constants.FatherOccupation).toString()
                     Constants.TempMotherOccupation = task.get(Constants.MotherOccupation).toString()
                     sharedPref()
+                }else if(task.get(Constants.UserType).toString() == "teacher"){
+                    Log.d(TAG, "setUserData: ${task.get(Constants.UserType).toString()}")
+                    Constants.TempUsername = task.get(Constants.Username).toString()
+                    Constants.TempPassword = task.get(Constants.Password).toString()
+                    Constants.TempGender = task.get(Constants.Gender).toString()
+                    Constants.TempUserType = task.get(Constants.UserType).toString()
+                    Constants.TempExperience = task.get(Constants.Experience).toString()
+                    Constants.TempRollNumber = task.get(Constants.RollNumber).toString()
+                    Constants.TempDeviceToken = task.get(Constants.DeviceToken).toString()
+                    Constants.TempUid = task.get(Constants.Uid).toString()
+                    Constants.TempFullName = task.get(Constants.FullName).toString()
+                    Constants.TempLastLogin = task.get(Constants.LastLogin).toString()
+                    Constants.TempPhoneNumber = task.get(Constants.PhoneNumber).toString()
+                    Constants.TempImageURL = task.get(Constants.ImageURL).toString()
+                    Constants.TempEmailID = task.get(Constants.EmailID).toString()
+                    Constants.TempPrimaryAddress = task.get(Constants.PrimaryAddress).toString()
+                    Constants.TempDateOfBirth = task.get(Constants.DateOfBirth).toString()
+                    sharedPref()
                 }
-
-
-
             }
         }
         progressDialog.dismiss()
@@ -259,6 +275,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString(Constants.DeviceToken, Constants.TempDeviceToken)
                 editor.putString(Constants.Uid, Constants.TempUid)
                 editor.putString(Constants.Department,Constants.TempDepartment)
+                editor.putString(Constants.Class,Constants.TempClass)
                 editor.putString(Constants.RegisterNumber,Constants.TempRegisterNumber)
                 editor.putString(Constants.RollNumber,Constants.TempRollNumber)
                 editor.putString(Constants.FullName, Constants.TempFullName)
@@ -274,7 +291,26 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString(Constants.FatherOccupation, Constants.TempFatherOccupation)
                 editor.putString(Constants.MotherOccupation, Constants.TempMotherOccupation)
                 editor.apply()
-            }
+            }"teacher" -> {
+            Log.d(TAG, "sharedPref: $Constants.TempUserType")
+            editor.putString(Constants.Username, Constants.TempUsername)
+            editor.putString(Constants.Password, Constants.TempPassword)
+            editor.putString(Constants.Gender, Constants.TempGender)
+            editor.putString(Constants.UserType, Constants.TempUserType)
+            editor.putString(Constants.DeviceToken, Constants.TempDeviceToken)
+            editor.putString(Constants.Uid, Constants.TempUid)
+            editor.putString(Constants.RollNumber,Constants.TempRollNumber)
+            editor.putString(Constants.FullName, Constants.TempFullName)
+            editor.putString(Constants.LastLogin, Constants.TempLastLogin)
+            editor.putString(Constants.Batch, Constants.TempBatch)
+            editor.putString(Constants.PhoneNumber, Constants.TempPhoneNumber)
+            editor.putString(Constants.ImageURL, Constants.TempImageURL)
+            editor.putString(Constants.EmailID, Constants.TempEmailID)
+            editor.putString(Constants.PrimaryAddress, Constants.TempPrimaryAddress)
+            editor.putString(Constants.DateOfBirth, Constants.TempDateOfBirth)
+            editor.putString(Constants.Experience,Constants.TempExperience)
+            editor.apply()
+        }
             else -> {
                 Log.d(TAG, "sharedPref: $Constants.TempUserType")
             }

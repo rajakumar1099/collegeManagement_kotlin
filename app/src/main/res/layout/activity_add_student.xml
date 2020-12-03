@@ -5,7 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
     <ScrollView
+        android:layout_below="@+id/toolbar"
         android:layout_marginBottom="?actionBarSize"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -14,18 +21,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <include
-                android:layout_alignParentTop="true"
-                layout="@layout/toolbar"
-                android:id="@+id/toolbar"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+
             <LinearLayout
                 android:id="@+id/rootLay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:layout_below="@+id/toolbar"
                 android:orientation="vertical">
                 <EditText
                     android:id="@+id/sUsername"
@@ -55,7 +56,7 @@
                         android:id="@+id/showPasswordBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_showpassword"
+                        android:src="@drawable/ic_hidepassword"
                         android:layout_centerInParent="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="10dp"/>
@@ -140,7 +141,22 @@
                         android:pointerIcon="arrow"
                         tools:targetApi="n" />
                 </LinearLayout>
-
+                <LinearLayout
+                    android:id="@+id/sClassSpinnerLay"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:entries="@array/classes"
+                        android:id="@+id/sClass"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        style="@style/SpinnerItemStyle"
+                        android:pointerIcon="arrow"
+                        tools:targetApi="n" />
+                </LinearLayout>
 
                 <EditText
                     android:inputType="number"

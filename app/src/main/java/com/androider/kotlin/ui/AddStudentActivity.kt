@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.util.rangeTo
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
@@ -28,6 +29,7 @@ class AddStudentActivity : AppCompatActivity() {
     lateinit var firebaseFirestore : FirebaseFirestore
     var gender : String = ""
     lateinit var radioButton: RadioButton
+    var spinnerVal: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +39,13 @@ class AddStudentActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseFirestore = FirebaseFirestore.getInstance()
 
+        spinnerListener()
+
         showPasswordBtn.setOnClickListener() {
             showHidePassword(sPassword, showPasswordBtn)
         }
         addStudentBtn.setOnClickListener(){
+            hideKeyboard()
             addStudent()
         }
 
@@ -49,6 +54,26 @@ class AddStudentActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun spinnerListener(){
+        sDepartment.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                spinnerVal = sDepartment.selectedItem.toString()
+                if (spinnerVal=="Select The Department"){
+                    sClassSpinnerLay.visibility = View.GONE
+                }else{
+                    sClassSpinnerLay.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
+    }
+
+
 
     private fun toolbar(){
         toolbarText.text = "Add Student"
@@ -60,17 +85,22 @@ class AddStudentActivity : AppCompatActivity() {
     }
 
     private fun showHidePassword(passwordEv: EditText, showPasswordBtn: ImageView){
-        if (!loginShow) {
-            loginShow = true
-            sPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            Log.d(TAG, "showHidePassword: Show ${passwordEv.text}")
-            showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_showpassword))
-        } else {
-            showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_hidepassword))
-            loginShow = false
-            sPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            Log.d(TAG, "showHidePassword: Hide ${passwordEv.text}")
+        if (sPassword.text.isNotEmpty()) {
+            if (!loginShow) {
+                loginShow = true
+                sPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                Log.d(TAG, "showHidePassword: Show ${passwordEv.text}")
+                showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_showpassword))
+            } else {
+                showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_hidepassword))
+                loginShow = false
+                sPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                Log.d(TAG, "showHidePassword: Hide ${passwordEv.text}")
 
+            }
+        }else{
+            showPasswordBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_hidepassword))
         }
     }
 
@@ -88,7 +118,7 @@ class AddStudentActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 sPassword.error = "Enter the Password"
             }
-            sPassword.text.length>5 ->{
+            sPassword.text.length<5 ->{
                 progressDialog.dismiss()
                 sPassword.error = "Password should be more than 6 characters"
             }
@@ -96,17 +126,6 @@ class AddStudentActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(this,"Select Any One Gender",Toast.LENGTH_SHORT).show()
             }
-
-//            selectedID == 0 -> {
-//                progressDialog.dismiss()
-//                gender = "male"
-//                Toast.makeText(this,"$gender",Toast.LENGTH_SHORT).show()
-//            }
-//            selectedID == 1 -> {
-//                progressDialog.dismiss()
-//                gender = "female"
-//                Toast.makeText(this,"$gender",Toast.LENGTH_SHORT).show()
-//            }
             sBatch.text.isEmpty() -> {
                 progressDialog.dismiss()
                 sBatch.error = "Enter the Batch"
@@ -122,6 +141,10 @@ class AddStudentActivity : AppCompatActivity() {
             sDepartment.selectedItem.toString().isEmpty() || sDepartment.selectedItem.toString() == "Select The Department" ->{
                 progressDialog.dismiss()
                 Toast.makeText(this,"Select The Department",Toast.LENGTH_SHORT).show()
+            }
+            sClass.selectedItem.toString().isEmpty() || sClass.selectedItem.toString() == "Select The Class" ->{
+                progressDialog.dismiss()
+                Toast.makeText(this,"Select The Class",Toast.LENGTH_SHORT).show()
             }
             sMobileNumber.text.isEmpty() -> {
                 progressDialog.dismiss()
@@ -204,6 +227,7 @@ class AddStudentActivity : AppCompatActivity() {
             map[Constants.RegisterNumber] = sRegisterNumber.text.trim().toString()
             map[Constants.RollNumber] = sRollNumber.text.trim().toString()
             map[Constants.Department] = sDepartment.selectedItem.toString()
+            map[Constants.Class] = sClass.selectedItem.toString()
             map[Constants.UserType] = "student"
             map[Constants.PhoneNumber] = sMobileNumber.text.trim().toString()
             map[Constants.EmailID] = sEmailID.text.trim().toString()

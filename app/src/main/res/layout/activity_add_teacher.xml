@@ -1,18 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <include
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
     <ScrollView
+        android:scrollIndicators="none"
+        android:overScrollMode="never"
+        android:layout_below="@+id/toolbar"
         android:layout_marginBottom="?actionBarSize"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/rootLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/tUsername"
+                    android:paddingStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Username"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle">
+                    <EditText
+                        android:inputType="textPassword"
+                        android:id="@+id/tPassword"
+                        android:paddingStart="10dp"
+                        android:hint="Password"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@drawable/full_circle"
+                        android:backgroundTint="@color/gWhite"/>
+
+                    <ImageView
+                        android:id="@+id/tshowPasswordBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_hidepassword"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10dp"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender:"/>
+                    <RadioGroup
+                        android:id="@+id/tradioGroup"
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:id="@+id/radioBtnMale"
+                            android:text="Male"/>
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/radioBtnFemale"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Female"/>
+                    </RadioGroup>
+
+                </LinearLayout>
+                <EditText
+                    android:inputType="number"
+                    android:id="@+id/tExperience"
+                    android:paddingStart="10dp"
+                    android:hint="Experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/tRollNumber"
+                    android:paddingStart="10dp"
+                    android:hint="Roll Number"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+
+
+
+                <EditText
+                    android:inputType="number"
+                    android:id="@+id/tMobileNumber"
+                    android:paddingStart="10dp"
+                    android:hint="Mobile Number"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+                <EditText
+                    android:id="@+id/tEmailID"
+                    android:paddingStart="10dp"
+                    android:hint="Email ID"
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+                <EditText
+                    android:id="@+id/tPrimaryAddress"
+                    android:paddingStart="5dp"
+                    android:padding="10dp"
+                    android:hint="Primary Address"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:gravity="top|start"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+                <EditText
+                    android:id="@+id/tDateOfBirth"
+                    android:paddingStart="10dp"
+                    android:hint="Date of birth"
+                    android:focusableInTouchMode="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/full_circle"
+                    android:backgroundTint="@color/gWhite"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </ScrollView>
-
     <LinearLayout
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"

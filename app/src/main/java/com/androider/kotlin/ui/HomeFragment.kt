@@ -13,8 +13,10 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.androider.kotlin.R
 import com.androider.kotlin.ui.imageSlide.ImageSliderAdapter
+import com.androider.kotlin.ui.teacher.AddAttendanceActivity
 import com.androider.kotlin.utils.Constants
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlin.math.abs
 
@@ -51,15 +53,35 @@ class HomeFragment : Fragment() {
 
         //Notice board banner
         noticeBanner(view)
-
-
-
         //Set User Profile Picture
         view.usernameTv.text = Constants.TempUsername
         Glide.with(view.context).load(Constants.TempImageURL).error(R.drawable.default_profile).centerCrop().into(view.profileImg)
 
+        teacherLay(view)
+        studentLay(view)
+        adminLay(view)
 
 
+
+        return view
+    }
+
+
+
+    private fun teacherLay(view: View){
+        view.teacherTrackBusLay.setOnClickListener(){
+            startActivity(Intent(context,TrackBusMapActivity::class.java))
+        }
+        view.teacherAttendanceLay.setOnClickListener {
+            startActivity(Intent(context,AddAttendanceActivity::class.java))
+        }
+    }
+    private fun studentLay(view: View){
+        view.studentTrackBusLay.setOnClickListener(){
+            startActivity(Intent(context,TrackBusMapActivity::class.java))
+        }
+    }
+    private fun adminLay(view: View){
         view.adminAddUserLay.setOnClickListener {
             openAddUserPage()
         }
@@ -67,7 +89,6 @@ class HomeFragment : Fragment() {
         view.adminTrackBusLay.setOnClickListener(){
             startActivity(Intent(context,TrackBusMapActivity::class.java))
         }
-        return view
     }
 
     private fun noticeBanner(view: View){
@@ -121,9 +142,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun addImageURLList(){
-        for(i in 1..5){
-            imageURLList.add("https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80")
-        }
+        imageURLList.add("https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80")
+        imageURLList.add("https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2134&q=80")
+        imageURLList.add("https://images.unsplash.com/photo-1569913486515-b74bf7751574?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=635&q=80")
+        imageURLList.add("https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80")
+        imageURLList.add("https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1386&q=80")
     }
 
 

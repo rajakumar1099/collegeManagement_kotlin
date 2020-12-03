@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.androider.kotlin.R
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -26,15 +28,18 @@ class HomeActivity : AppCompatActivity() {
         val profileFragment = ProfileFragment()
 
         makeCurrentFragment(homeFragment, 1)
-        bottomNavigationBar.setItemSelected(R.id.home)
-        bottomNavigationBar.setOnItemSelectedListener {
+//        val materialShapeDrawable : MaterialShapeDrawable = bottomNavigationBar.background as MaterialShapeDrawable
+//        materialShapeDrawable.shapeAppearanceModel.toBuilder().setTopRightCorner(CornerFamily.ROUNDED,20f)
+//                .setTopLeftCorner(CornerFamily.ROUNDED,20f).build()
+        bottomNavigationBar.setOnNavigationItemSelectedListener {
 
-            when(it){
+            when(it.itemId){
                 R.id.home -> makeCurrentFragment(homeFragment, 1)
                 R.id.events -> makeCurrentFragment(eventFragment, 2)
                 R.id.chat -> makeCurrentFragment(chatFragment, 3)
                 R.id.profile -> makeCurrentFragment(profileFragment, 4)
             }
+            true
         }
 
 

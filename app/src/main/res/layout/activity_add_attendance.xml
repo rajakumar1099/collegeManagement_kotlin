@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.teacher.AddAttendanceActivity">
+
+
+    <include
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    </include>
+
+    <LinearLayout
+        android:id="@+id/spinnerLay"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/full_circle"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <Spinner
+            android:id="@+id/sDepartment"
+            android:entries="@array/departments"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/SpinnerItemStyle"
+            android:pointerIcon="arrow"
+            tools:targetApi="n" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/full_circle"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <Spinner
+        android:id="@+id/sClass"
+        android:entries="@array/classes"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        style="@style/SpinnerItemStyle"
+        android:pointerIcon="arrow"
+        tools:targetApi="n" />
+    </LinearLayout>
+</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/spinnerLay"
+        android:id="@+id/addAttendanceRecycler"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/floatingNextAttendanceBtn"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/gWhite"
+        android:src="@drawable/ic_right_arrow"/>
+
+
+</RelativeLayout>

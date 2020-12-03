@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         android:scrollIndicators="none">
         <LinearLayout
             android:layout_width="match_parent"
@@ -685,7 +686,7 @@
                         android:layout_marginTop="10dp">
                         <androidx.cardview.widget.CardView
                             android:layout_weight="1"
-                            android:id="@+id/teacherAnnouncementLay"
+                            android:id="@+id/teacherAttendanceLay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="12dp"
@@ -703,12 +704,12 @@
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
-                                    android:src="@drawable/ic_announcement"
+                                    android:src="@drawable/ic_attendance"
                                     android:layout_marginBottom="10dp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/announcements"
+                                    android:text="Attendance"
                                     android:textSize="12sp"
                                     android:textAlignment="center"
                                     android:textStyle="bold"/>
@@ -741,7 +742,7 @@
                                     android:textSize="12sp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Manage Staffs"
+                                    android:text="Manage Students"
                                     android:textAlignment="center"
                                     android:textStyle="bold"/>
                             </LinearLayout>
