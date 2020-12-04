@@ -2,35 +2,34 @@ package com.androider.kotlin.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_track_bus_map.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
+
 
 class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -44,6 +43,7 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var ACCESS_LOCATION_REQUEST_CODE: Int = 10001
     lateinit var locationTask: Task<Location>
+    private lateinit var locationManager: LocationManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,26 +53,55 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         setToolbar()
         floatingCurrentLocationBtn.setOnClickListener {
-            zoomToUserLocation()
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                enableUserLocation()
+                zoomToUserLocation()
+            }else{
+                showGPSDisabledAlertToUser();
+            }
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-            enableUserLocation()
-            zoomToUserLocation()
-        }else{
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),ACCESS_LOCATION_REQUEST_CODE)
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                enableUserLocation()
+                zoomToUserLocation()
             }else{
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),ACCESS_LOCATION_REQUEST_CODE)
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), ACCESS_LOCATION_REQUEST_CODE)
+                }else{
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), ACCESS_LOCATION_REQUEST_CODE)
+                }
             }
+
+        }else{
+            showGPSDisabledAlertToUser()
         }
+
+
+    }
+
+    private fun showGPSDisabledAlertToUser() {
+        val alertDialogBuilder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Goto Settings Page To Enable GPS",
+                        DialogInterface.OnClickListener { dialog, id ->
+                            val callGPSSettingIntent = Intent(
+                                    Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                            startActivity(callGPSSettingIntent)
+                        })
+        alertDialogBuilder.setNegativeButton("Cancel",
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+        val alert: android.app.AlertDialog? = alertDialogBuilder.create()
+        alert?.show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -82,26 +111,67 @@ class TrackBusMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 enableUserLocation()
                 zoomToUserLocation()
             }else{
-                Toast.makeText(this,"Turn On Location",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Turn On Location", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun enableUserLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         mMap.isMyLocationEnabled = true
         mMap.uiSettings.isMyLocationButtonEnabled = false
     }
 
-    @SuppressLint("MissingPermission")
-    private fun zoomToUserLocation(){
-        locationTask = mFusedLocationClient!!.lastLocation
-        locationTask.addOnSuccessListener (OnSuccessListener {
-            if(locationTask.isSuccessful){
-                var latLng = LatLng(it.latitude,it.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16F))
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                enableUserLocation()
+                zoomToUserLocation()
             }else{
-                Toast.makeText(this,"Something Went Wrong",Toast.LENGTH_SHORT).show()            }
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), ACCESS_LOCATION_REQUEST_CODE)
+                }else{
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), ACCESS_LOCATION_REQUEST_CODE)
+                }
+            }
+
+        }else{
+            showGPSDisabledAlertToUser()
+        }
+    }
+
+    private fun zoomToUserLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        locationTask = mFusedLocationClient!!.lastLocation
+        locationTask.addOnSuccessListener(OnSuccessListener {
+            if (locationTask.isSuccessful) {
+                if (it != null){
+                    val latLng = LatLng(it.latitude, it.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16F))
+                }
+
+            } else {
+                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+            }
         })
 
     }

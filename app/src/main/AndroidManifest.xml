@@ -17,9 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.teacher.AddAttendanceActivity"
+        <activity android:name=".ui.NewMessageActivity"></activity>
+        <activity
+            android:name=".ui.teacher.AddAttendanceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomAppTheme"></activity>
+            android:theme="@style/CustomAppTheme" />
         <activity android:name=".ui.AddTeacherActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

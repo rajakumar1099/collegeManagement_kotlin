@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
@@ -26,10 +27,16 @@ class ProfileFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_profile, container, false)
-        view.logoutImg.setOnClickListener {
-            logOutBtn()
-        }
+//        view.logoutImg.setOnClickListener {
+//            logOutBtn()
+//        }
+
+        setUpProfile(view)
         return view
+    }
+
+    private fun setUpProfile(view: View){
+        Glide.with(view.context).load(Constants.TempImageURL).error(R.drawable.avatar).into(view.profileImg)
     }
 
     private fun logOutBtn(){
