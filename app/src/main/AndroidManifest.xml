@@ -17,12 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.NewMessageActivity"></activity>
-        <activity
-            android:name=".ui.teacher.AddAttendanceActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/CustomAppTheme" />
-        <activity android:name=".ui.AddTeacherActivity" />
+        <activity android:name=".ui.AddDriverActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -35,6 +30,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".ui.driver.DriverMapActivity"
+            android:label="@string/title_activity_driver_map" />
+        <activity android:name=".ui.NewMessageActivity" />
+        <activity
+            android:name=".ui.teacher.AddAttendanceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomAppTheme" />
+        <activity android:name=".ui.AddTeacherActivity" />
         <activity
             android:name=".ui.TrackBusMapActivity"
             android:label="@string/title_activity_track_bus_map"

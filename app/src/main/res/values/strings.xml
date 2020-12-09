@@ -44,4 +44,5 @@
     <string name="track_bus">Track bus</string>
     <string name="manage_people">Manage People</string>
     <string name="title_activity_track_bus_map">Map</string>
+    <string name="title_activity_driver_map">Map</string>
 </resources>

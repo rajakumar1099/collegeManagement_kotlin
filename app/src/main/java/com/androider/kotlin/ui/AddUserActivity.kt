@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
+import com.androider.kotlin.ui.driver.DriverMapActivity
 import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -23,6 +24,9 @@ class AddUserActivity : AppCompatActivity() {
 
         addTeacherLay.setOnClickListener(){
             startActivity(Intent(this,AddTeacherActivity::class.java))
+        }
+        addBusDriverLay.setOnClickListener(){
+            startActivity(Intent(this,AddDriverActivity::class.java))
         }
     }
 

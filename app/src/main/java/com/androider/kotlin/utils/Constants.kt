@@ -27,6 +27,18 @@ class Constants{
         const val FatherOccupation ="fatheroccupation"
         const val MotherOccupation = "motheroccupation"
 
+        //Driver TAG
+        const val TAG_DRIVER_USERNAME = "username"
+        const val TAG_DRIVER_NAME = "name"
+        const val TAG_DRIVER_UID = "uid"
+        const val TAG_DRIVER_DEVICE_TOKEN ="devicetoken"
+        const val TAG_DRIVER_EMAILID = "emailID"
+        const val TAG_DRIVER_PASSWORD = "password"
+        const val TAG_DRIVER_IMAGEURL = "imageurl"
+        const val TAG_DRIVER_PHONENUMBER = "phonenumber"
+        const val TAG_DRIVER_BUS_NUMBER = "busnumber"
+
+
         //Store user data after Login
         var TempUsername = ""
         var TempPassword = ""
