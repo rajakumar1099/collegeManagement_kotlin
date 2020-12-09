@@ -11,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.androider.kotlin.R
+import com.androider.kotlin.ui.driver.DriverMapActivity
 import com.androider.kotlin.utils.Constants
 
 class SplashActivity : AppCompatActivity() {
@@ -99,6 +100,18 @@ class SplashActivity : AppCompatActivity() {
                 Constants.TempPrimaryAddress = pref.getString(Constants.PrimaryAddress, Constants.TempPrimaryAddress).toString()
                 Constants.TempDateOfBirth = pref.getString(Constants.DateOfBirth, Constants.TempDateOfBirth).toString()
                 moveToHomePage()
+            }
+            pref.getString("usertype", Constants.TempUserType).toString() == "driver" ->{
+                Constants.TempUsername = pref.getString(Constants.Username,Constants.TempUsername).toString()
+                Constants.TempPassword = pref.getString(Constants.Password, Constants.TempPassword).toString()
+                Constants.TempUserType = pref.getString(Constants.UserType, Constants.TempUserType).toString()
+                Constants.TempDeviceToken = pref.getString(Constants.DeviceToken, Constants.TempDeviceToken).toString()
+                Constants.TempUid = pref.getString(Constants.Uid, Constants.TempUid).toString()
+                Constants.TempPhoneNumber = pref.getString(Constants.PhoneNumber, Constants.TempPhoneNumber).toString()
+                Constants.TempImageURL = pref.getString(Constants.ImageURL, Constants.TempImageURL).toString()
+                Constants.TempEmailID = pref.getString(Constants.EmailID, Constants.TempEmailID).toString()
+                startActivity(Intent(applicationContext,DriverMapActivity::class.java))
+                finish()
             }
                 else -> {
                 Log.d("TAG", "loadData: NoDataFound")

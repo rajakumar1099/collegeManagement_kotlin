@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <include
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
     <fragment
+        android:layout_below="@+id/toolbar"
         android:id="@+id/drivermap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

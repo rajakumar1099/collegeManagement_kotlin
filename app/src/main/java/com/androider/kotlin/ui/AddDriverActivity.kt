@@ -46,23 +46,23 @@ class AddDriverActivity : AppCompatActivity() {
     private fun addDriverAccount(){
         progressDialog.show()
         when {
-            dUsername.text.toString().trim().isNotEmpty() -> {
+            dUsername.text.toString().trim().isEmpty() -> {
                 progressDialog.dismiss()
                 dUsername.error = "Enter the Username"
             }
-            dPassword.text.toString().trim().isNotEmpty() -> {
+            dPassword.text.toString().trim().isEmpty() -> {
                 progressDialog.dismiss()
                 dPassword.error = "Enter the Password"
             }
-            dPhoneNumber.text.toString().trim().isNotEmpty() -> {
+            dPhoneNumber.text.toString().trim().isEmpty() -> {
                 progressDialog.dismiss()
                 dPhoneNumber.error = "Enter the Phone number"
             }
-            dEmailID.text.toString().trim().isNotEmpty() -> {
+            dEmailID.text.toString().trim().isEmpty() -> {
                 progressDialog.dismiss()
                 dEmailID.error = "Enter the Email ID"
             }
-            dbusNumber.text.toString().trim().isNotEmpty() -> {
+            dbusNumber.text.toString().trim().isEmpty() -> {
                 progressDialog.dismiss()
                 dbusNumber.error = "Enter the Bus number"
             }
@@ -84,6 +84,7 @@ class AddDriverActivity : AppCompatActivity() {
             val map: HashMap<String, String> = HashMap<String,String>()
             map[Constants.TAG_DRIVER_USERNAME] = dUsername.text.trim().toString()
             map[Constants.TAG_DRIVER_PASSWORD] = dPassword.text.trim().toString()
+            map[Constants.TAG_DRIVER_EMAILID] = dEmailID.text.trim().toString()
             map[Constants.TAG_DRIVER_PHONENUMBER] = dPhoneNumber.text.trim().toString()
             map[Constants.TAG_DRIVER_BUS_NUMBER] = dbusNumber.text.trim().toString()
             map[Constants.UserType] = "driver"
@@ -110,7 +111,7 @@ class AddDriverActivity : AppCompatActivity() {
     private fun toolbar(){
         toolbarText.text = "Add Driver"
         toolbarText.visibility = View.VISIBLE
-        toolbarBackBtn.visibility = View.VISIBLE
+        toolbarBackBtn.visibility = View.GONE
         toolbarBackBtn.setOnClickListener(){
             finish()
         }

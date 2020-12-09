@@ -27,9 +27,9 @@ class ProfileFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_profile, container, false)
-//        view.logoutImg.setOnClickListener {
-//            logOutBtn()
-//        }
+        view.logoutImg.setOnClickListener {
+            logOutBtn()
+        }
 
         setUpProfile(view)
         return view

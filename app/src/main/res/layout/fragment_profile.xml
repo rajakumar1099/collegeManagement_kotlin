@@ -14,10 +14,18 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="300dp">
+
             <ImageView
                 android:src="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background ="@drawable/ic_logout"
+                android:backgroundTint="@color/gWhite"
+                android:id="@+id/logoutImg"/>
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
