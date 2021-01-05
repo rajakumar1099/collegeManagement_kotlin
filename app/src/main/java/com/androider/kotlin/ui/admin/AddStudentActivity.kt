@@ -1,4 +1,4 @@
-package com.androider.kotlin.ui
+package com.androider.kotlin.ui.admin
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -9,8 +9,6 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.core.content.ContextCompat
-import androidx.core.util.rangeTo
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +17,6 @@ import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_add_student.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
-import kotlin.math.log
 
 class AddStudentActivity : AppCompatActivity() {
     private var loginShow : Boolean = false

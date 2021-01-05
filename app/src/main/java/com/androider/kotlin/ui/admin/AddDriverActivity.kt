@@ -1,4 +1,4 @@
-package com.androider.kotlin.ui
+package com.androider.kotlin.ui.admin
 
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +12,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_add_driver.*
 import kotlinx.android.synthetic.main.activity_add_student.*

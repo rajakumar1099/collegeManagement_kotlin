@@ -1,4 +1,4 @@
-package com.androider.kotlin.ui
+package com.androider.kotlin.ui.admin
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -12,15 +12,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dmax.dialog.SpotsDialog
-import kotlinx.android.synthetic.main.activity_add_student.*
 import kotlinx.android.synthetic.main.activity_add_teacher.*
-import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 

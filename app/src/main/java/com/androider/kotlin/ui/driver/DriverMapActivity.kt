@@ -11,10 +11,13 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.androider.kotlin.R
 import com.androider.kotlin.utils.Constants
+import com.androider.kotlin.utils.toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,7 +28,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_driver_map.*
+import kotlinx.android.synthetic.main.dialog_bus_no.*
+import kotlinx.android.synthetic.main.dialog_bus_no.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class DriverMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -36,9 +44,7 @@ class DriverMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var ACCESS_LOCATION_REQUEST_CODE: Int = 10001
     private lateinit var locationTask: Task<Location>
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-
-
-
+    private lateinit var firebaseFirestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +57,45 @@ class DriverMapActivity : AppCompatActivity(), OnMapReadyCallback {
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         firebaseDatabase = FirebaseDatabase.getInstance()
+        firebaseFirestore = FirebaseFirestore.getInstance()
 
+        driverMapOnlineSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                Log.d("TAG", "driverMapOnlineSwitch: enabled")
+                openDialogBox()
+            } else {
+
+            }
+        }
 
     }
+
+    private fun openDialogBox(){
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_bus_no, null)
+        dialogBuilder.setView(dialogView)
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
+        dialogView.busNumberFAB.setOnClickListener {
+                if (dialogView.enterBusNumberTv.text.toString().isNotEmpty()) {
+                    alertDialog.dismiss()
+                    makeBusAvailable(dialogView.enterBusNumberTv.text.toString())
+                    onMapReady(mMap)
+
+                }else{
+                    toast("Enter the Bus Number to continue")
+                }
+        }
+    }
+
+    private fun makeBusAvailable(busNumber: String){
+        firebaseFirestore.collection("available-buses").get().addOnSuccessListener {
+        }.addOnFailureListener {
+            toast(it.toString())
+        }
+    }
+
 
 
 
@@ -146,4 +188,5 @@ class DriverMapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
 }

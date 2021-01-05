@@ -16,8 +16,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AddDriverActivity"></activity>
+        <activity android:name=".ui.AvailableBusActivity"></activity>
+        <activity android:name=".ui.admin.AddDriverActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,18 +40,18 @@
             android:name=".ui.teacher.AddAttendanceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomAppTheme" />
-        <activity android:name=".ui.AddTeacherActivity" />
+        <activity android:name=".ui.admin.AddTeacherActivity" />
         <activity
             android:name=".ui.TrackBusMapActivity"
             android:label="@string/title_activity_track_bus_map"
             android:screenOrientation="portrait"
             android:theme="@style/CustomAppTheme" />
         <activity
-            android:name=".ui.AddStudentActivity"
+            android:name=".ui.admin.AddStudentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomAppTheme" />
         <activity
-            android:name=".ui.AddUserActivity"
+            android:name=".ui.admin.AddUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomAppTheme" />
         <activity

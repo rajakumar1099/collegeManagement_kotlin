@@ -1,13 +1,10 @@
-package com.androider.kotlin.ui
+package com.androider.kotlin.ui.admin
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.androider.kotlin.R
-import com.androider.kotlin.ui.driver.DriverMapActivity
 import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -19,14 +16,14 @@ class AddUserActivity : AppCompatActivity() {
 
 
         addStudentLay.setOnClickListener(){
-            startActivity(Intent(this,AddStudentActivity::class.java))
+            startActivity(Intent(this, AddStudentActivity::class.java))
         }
 
         addTeacherLay.setOnClickListener(){
-            startActivity(Intent(this,AddTeacherActivity::class.java))
+            startActivity(Intent(this, AddTeacherActivity::class.java))
         }
         addBusDriverLay.setOnClickListener(){
-            startActivity(Intent(this,AddDriverActivity::class.java))
+            startActivity(Intent(this, AddDriverActivity::class.java))
         }
     }
 
